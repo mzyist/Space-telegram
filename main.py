@@ -12,12 +12,17 @@ telegram_token = os.getenv('TG_TOKEN')
 chat_id = '-1001605327134'
 
 
-def send_message(telegram_token, chat_id):
+def send_message(telegram_token, chat_id, spacex_url):
+    launch_id = '5eb87d42ffd86e000604b384'
+    url = spacex_url.format(launch_id)
+    url_get = requests.get(url)
+    url_get.raise_for_status()
+    links = url_get.json().get('links').get('flickr').get('original')
+    link = links[0]
     bot = telegram.Bot(token=telegram_token)
-    bot.send_message(chat_id=chat_id, text="I can send text now!.")
+    bot.send_document(chat_id=chat_id, document=link)
 
 
-send_message(telegram_token, chat_id)
 
 
 def fetch_spacex_launch(spacex_directory, spacex_url):
@@ -88,3 +93,4 @@ if __name__ == "__main__":
     # fetch_epic(epic_directory, nasa_token, nasa_url)
     # fetch_spacex_launch(spacex_directory, spacex_url)
     # fetch_epic(epic_directory, nasa_token, nasa_url)
+    send_message(telegram_token, chat_id, spacex_url)
