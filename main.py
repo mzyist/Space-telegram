@@ -4,7 +4,20 @@ import pathlib
 from urllib.parse import urlparse
 
 import requests
+import telegram
 from dotenv import load_dotenv
+
+load_dotenv()
+telegram_token = os.getenv('TG_TOKEN')
+chat_id = '-1001605327134'
+
+
+def send_message(telegram_token, chat_id):
+    bot = telegram.Bot(token=telegram_token)
+    bot.send_message(chat_id=chat_id, text="I can send text now!.")
+
+
+send_message(telegram_token, chat_id)
 
 
 def fetch_spacex_launch(spacex_directory, spacex_url):
@@ -63,7 +76,6 @@ def get_file_extension(nasa_image):
 
 
 if __name__ == "__main__":
-    load_dotenv()
     nasa_token = os.getenv('NASA_API_TOKEN')
     nasa_directory = '/NASA_images/'
     epic_directory = '/EPIC_images/'
@@ -73,6 +85,6 @@ if __name__ == "__main__":
     pathlib.Path(epic_directory).mkdir(exist_ok=True)
     spacex_url = 'https://api.spacexdata.com/v4/launches/{}'
     nasa_url = 'https://api.nasa.gov/'
-    fetch_epic(epic_directory, nasa_token, nasa_url)
-    fetch_spacex_launch(spacex_directory, spacex_url)
-    fetch_epic(epic_directory, nasa_token, nasa_url)
+    # fetch_epic(epic_directory, nasa_token, nasa_url)
+    # fetch_spacex_launch(spacex_directory, spacex_url)
+    # fetch_epic(epic_directory, nasa_token, nasa_url)
