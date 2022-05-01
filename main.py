@@ -10,19 +10,12 @@ from dotenv import load_dotenv
 load_dotenv()
 telegram_token = os.getenv('TG_TOKEN')
 chat_id = '-1001605327134'
+bot = telegram.Bot(token=telegram_token)
 
 
-def send_message(telegram_token, chat_id, spacex_url):
-    launch_id = '5eb87d42ffd86e000604b384'
-    url = spacex_url.format(launch_id)
-    url_get = requests.get(url)
-    url_get.raise_for_status()
-    links = url_get.json().get('links').get('flickr').get('original')
-    link = links[0]
+def send_message(telegram_token, chat_id):
     bot = telegram.Bot(token=telegram_token)
-    bot.send_document(chat_id=chat_id, document=link)
-
-
+    bot.send_document(chat_id=chat_id, document=open('C:\images\SpaceX_images\SpaceX0.jpg', 'rb'))
 
 
 def fetch_spacex_launch(spacex_directory, spacex_url):
@@ -82,15 +75,15 @@ def get_file_extension(nasa_image):
 
 if __name__ == "__main__":
     nasa_token = os.getenv('NASA_API_TOKEN')
-    nasa_directory = '/NASA_images/'
-    epic_directory = '/EPIC_images/'
-    spacex_directory = '/SpaceX_images/'
+    nasa_directory = '/images/NASA_images/'
+    epic_directory = '/images/EPIC_images/'
+    spacex_directory = '/images/SpaceX_images/'
     pathlib.Path(spacex_directory).mkdir(exist_ok=True)
     pathlib.Path(nasa_directory).mkdir(exist_ok=True)
     pathlib.Path(epic_directory).mkdir(exist_ok=True)
     spacex_url = 'https://api.spacexdata.com/v4/launches/{}'
     nasa_url = 'https://api.nasa.gov/'
-    # fetch_epic(epic_directory, nasa_token, nasa_url)
-    # fetch_spacex_launch(spacex_directory, spacex_url)
-    # fetch_epic(epic_directory, nasa_token, nasa_url)
-    send_message(telegram_token, chat_id, spacex_url)
+    fetch_epic(epic_directory, nasa_token, nasa_url)
+    fetch_spacex_launch(spacex_directory, spacex_url)
+    fetch_nasa(nasa_directory, nasa_token, nasa_url)
+    send_message(telegram_token, chat_id)
