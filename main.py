@@ -1,6 +1,7 @@
 import datetime
 import os.path
 import pathlib
+import time
 from urllib.parse import urlparse
 
 import requests
@@ -9,13 +10,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 telegram_token = os.getenv('TG_TOKEN')
-chat_id = '-1001605327134'
+chat_id = os.getenv('CHAT_ID')
 bot = telegram.Bot(token=telegram_token)
+timer = os.getenv('TIMER')
 
-
-def send_message(telegram_token, chat_id):
+def send_message(telegram_token, chat_id, timer):
     bot = telegram.Bot(token=telegram_token)
-    bot.send_document(chat_id=chat_id, document=open('C:\images\SpaceX_images\SpaceX0.jpg', 'rb'))
+    for root, dir, files in os.walk('C:\images', topdown=True):
+        for file in files:
+            time.sleep(timer)
+            bot.send_document(chat_id=chat_id, document=open(f'{root}\{file}', 'rb'))
 
 
 def fetch_spacex_launch(spacex_directory, spacex_url):
