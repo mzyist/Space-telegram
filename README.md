@@ -1,4 +1,4 @@
-# Download photos from NASA
+# Space telegram
 
 The script will download photos from SpaceX and NASA using NASA api. Then publish them on Telegram-channel
 
