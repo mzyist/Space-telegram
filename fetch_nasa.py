@@ -1,11 +1,11 @@
 import datetime
 import os
-from urllib.parse import urlparse
-
-import requests
 import pathlib
 
+import requests
 from dotenv import load_dotenv
+
+from get_file_extension import get_file_extension
 
 
 def fetch_nasa(nasa_directory, nasa_token, nasa_url):
@@ -44,11 +44,6 @@ def fetch_epic(epic_directory, nasa_token, nasa_url):
         with open(f'{epic_directory}epic{count}.png', 'wb') as file:
             file.write(epic_image_request.content)
 
-
-def get_file_extension(nasa_image):
-    parsed = urlparse(nasa_image)
-    path = os.path.splitext(parsed[2])
-    return path[1]
 
 
 if __name__ == "__main__":
