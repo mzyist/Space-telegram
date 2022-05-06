@@ -3,6 +3,9 @@ import os
 from urllib.parse import urlparse
 
 import requests
+import pathlib
+
+from dotenv import load_dotenv
 
 
 def fetch_nasa(nasa_directory, nasa_token, nasa_url):
@@ -46,3 +49,15 @@ def get_file_extension(nasa_image):
     parsed = urlparse(nasa_image)
     path = os.path.splitext(parsed[2])
     return path[1]
+
+
+if __name__ == "__main__":
+    load_dotenv()
+    nasa_token = os.getenv('NASA_API_TOKEN')
+    nasa_directory = '/images/NASA_images/'
+    epic_directory = '/images/EPIC_images/'
+    pathlib.Path(epic_directory).mkdir(exist_ok=True)
+    pathlib.Path(nasa_directory).mkdir(exist_ok=True)
+    nasa_url = 'https://api.nasa.gov/'
+    fetch_epic(epic_directory, nasa_token, nasa_url)
+    fetch_nasa(nasa_directory, nasa_token, nasa_url)
