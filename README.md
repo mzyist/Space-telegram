@@ -20,16 +20,26 @@ pip3 install -r requirements.txt
 
 ### How to use
 
-To run the script simply run main.py file using command line:
+To download photos of the day from NASA and photos of the earth(EPIC) run script file name using python:
 ```commandline
-python main.py
+python fetch_nasa.py 
 ```
+To download photos of SpaceX launches:
+```commandline
+python fetch_spacex.py
+```
+
 It will then create 3 folders:
 * /SpaceX_images
 * /EPIC_images
 * /NASA_images
 
 and download photos right into them.
+
+To publish photos on Telegram channel:
+```commandline
+python send_message.py
+```
 
 Then it will publish photo on Telegram channel, one photo per 24 hour.
 You can change this interval by changing variable in .env:
