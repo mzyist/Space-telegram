@@ -5,7 +5,7 @@ import pathlib
 import requests
 from dotenv import load_dotenv
 
-from get_file_extension import get_file_extension
+from save_image import save_image_file
 
 
 def fetch_nasa(nasa_directory, nasa_token, nasa_url):
@@ -15,11 +15,8 @@ def fetch_nasa(nasa_directory, nasa_token, nasa_url):
     nasa_content = response.json()
     for count, content in enumerate(nasa_content):
         nasa_image = content['url']
-        nasa_get = requests.get(nasa_image)
-        nasa_get.raise_for_status()
-        extension = get_file_extension(nasa_image)
-        with open(f'{nasa_directory}NASA{count}{extension}', 'wb') as file:
-            file.write(nasa_get.content)
+        file_name = f'NASA_{count}'
+        save_image_file(nasa_directory, nasa_image, file_name)
 
 
 def fetch_epic(epic_directory, nasa_token, nasa_url):
@@ -33,17 +30,14 @@ def fetch_epic(epic_directory, nasa_token, nasa_url):
         image_name = content['image']
         date = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
         format_date = date.strftime('%Y/%m/%d')
+        file_name = f'EPIC_{count}'
         image_url = image_url_template.format(
             nasa_url,
             format_date,
             image_name,
             nasa_token
         )
-        epic_image_request = requests.get(image_url)
-        epic_image_request.raise_for_status()
-        with open(f'{epic_directory}epic{count}.png', 'wb') as file:
-            file.write(epic_image_request.content)
-
+        save_image_file(epic_directory, image_url, file_name)
 
 
 if __name__ == "__main__":
