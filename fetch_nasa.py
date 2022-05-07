@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from save_image import save_image_file
 
 
-def fetch_nasa(nasa_directory, nasa_token, nasa_url):
+def fetch_nasa_apod(nasa_directory, nasa_token, nasa_url):
     nasa_url = f'{nasa_url}planetary/apod'
     payload = {
         'api_key': nasa_token,
@@ -54,4 +54,4 @@ if __name__ == "__main__":
     pathlib.Path(nasa_directory).mkdir(exist_ok=True)
     nasa_url = 'https://api.nasa.gov/'
     fetch_epic(epic_directory, nasa_token, nasa_url)
-    fetch_nasa(nasa_directory, nasa_token, nasa_url)
+    fetch_nasa_apod(nasa_directory, nasa_token, nasa_url)
