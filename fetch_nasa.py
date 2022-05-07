@@ -9,8 +9,12 @@ from save_image import save_image_file
 
 
 def fetch_nasa(nasa_directory, nasa_token, nasa_url):
-    nasa_url = f'{nasa_url}planetary/apod?api_key={nasa_token}&count=30'
-    response = requests.get(nasa_url)
+    nasa_url = f'{nasa_url}planetary/apod'
+    payload = {
+        'api_key': nasa_token,
+        'count': 30
+    }
+    response = requests.get(nasa_url, params=payload)
     response.raise_for_status()
     nasa_content = response.json()
     for count, content in enumerate(nasa_content):
@@ -25,7 +29,8 @@ def fetch_epic(epic_directory, nasa_token, nasa_url):
     epic_response.raise_for_status()
     epic_content = epic_response.json()
     image_url_template = '{}EPIC/archive/natural/{}/png/{}.png?api_key={}'
-    for count, content in enumerate(epic_content[:5]):
+    links_amount = 10
+    for count, content in enumerate(epic_content[:links_amount]):
         date_string = content['date']
         image_name = content['image']
         date = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
