@@ -6,8 +6,8 @@ import requests
 
 def get_url_extension(file_path):
     parsed = urlparse(file_path)
-    path = os.path.splitext(parsed[2])
-    return path[1]
+    path, extension = os.path.splitext(parsed.path)
+    return extension
 
 
 def save_image_file(directory, image_url, file_name):
