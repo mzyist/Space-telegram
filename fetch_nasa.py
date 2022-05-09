@@ -5,7 +5,7 @@ import pathlib
 import requests
 from dotenv import load_dotenv
 
-from save_image import save_image_file
+from file_utilities import save_image_file
 
 
 def fetch_nasa_apod(nasa_directory, nasa_token, nasa_url):
