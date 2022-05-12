@@ -10,11 +10,11 @@ def send_message(telegram_token, chat_id, timer):
     while True:
         for root, dir, files in os.walk('\images', topdown=True):
             for file in files:
-                time.sleep(timer)
                 bot.send_document(
                     chat_id=chat_id,
                     document=open(f'{root}\{file}', 'rb')
                 )
+                time.sleep(timer)
 
 
 if __name__ == "__main__":
